@@ -1,6 +1,7 @@
 pub struct Config {
     pub query: String,
     pub filename: String,
+    pub case_sensitive: String,
 }
 
 impl Config {
@@ -11,6 +12,18 @@ impl Config {
 
         let query = args[1].clone();
         let filename = args[2].clone();
-        Ok(Config { query, filename })
+        let size = args.len();
+
+        let case_sensitive = if size == 4 {
+            args[3].clone()
+        } else {
+            "0".to_string()
+        };
+
+        Ok(Config {
+            query,
+            filename,
+            case_sensitive,
+        })
     }
 }

@@ -4,7 +4,13 @@ use std::{error::Error, fs};
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(&config.filename)?;
-    for line in search(&config.query, &contents) {
+    let result = if config.case_sensitive == "1" {
+        search(&config.query, &contents)
+    } else {
+        search_case_insensitive(&config.query, &contents)
+    };
+
+    for line in result {
         println!("{}", line);
     }
     Ok(())
